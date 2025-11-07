@@ -18,6 +18,10 @@ interface EnvVars {
   NODE_ENV: string;
   JWT_SECRET: string;
   JWT_EXPIRES_IN: string;
+  PINECONE_API_KEY: string;
+  PINECONE_ENVIRONMENT: string;
+  PINECONE_INDEX_NAME: string;
+  GROQ_API_KEY: string;
 }
 
 const envsSchema = joi
@@ -32,6 +36,10 @@ const envsSchema = joi
     POSTGRES_LOG: joi.string().required(),
     JWT_SECRET: joi.string().required(),
     JWT_EXPIRES_IN: joi.string().required(),
+    PINECONE_API_KEY: joi.string().required(),
+    PINECONE_ENVIRONMENT: joi.string().required(),
+    PINECONE_INDEX_NAME: joi.string().required(),
+    GROQ_API_KEY: joi.string().required(),
   })
   .unknown(true);
 
@@ -46,6 +54,10 @@ let envVars: EnvVars = {
   POSTGRES_LOG: '',
   JWT_SECRET: '',
   JWT_EXPIRES_IN: '',
+  PINECONE_API_KEY: '',
+  PINECONE_ENVIRONMENT: '',
+  PINECONE_INDEX_NAME: '',
+  GROQ_API_KEY: '',
 };
 
 if (process.env.NODE_ENV !== NODE_ENV.TEST) {
@@ -72,5 +84,13 @@ export const envs = {
   jwt: {
     secret: envVars.JWT_SECRET,
     expiresIn: envVars.JWT_EXPIRES_IN,
+  },
+  pinecone: {
+    apiKey: envVars.PINECONE_API_KEY,
+    enviroment: envVars.PINECONE_ENVIRONMENT,
+    indexName: envVars.PINECONE_INDEX_NAME,
+  },
+  groq: {
+    apiKey: envVars.GROQ_API_KEY,
   },
 };

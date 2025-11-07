@@ -1,98 +1,319 @@
-<p align="center">
-  <a href="http://nestjs.com/" target="blank"><img src="https://nestjs.com/img/logo-small.svg" width="120" alt="Nest Logo" /></a>
-</p>
+# Simple RAG Backend
 
-[circleci-image]: https://img.shields.io/circleci/build/github/nestjs/nest/master?token=abc123def456
-[circleci-url]: https://circleci.com/gh/nestjs/nest
+> 🚧 **Project Status: Under Construction**
+>
+> This project is currently in active development. The core infrastructure has been initialized, but key features are still being implemented.
 
-  <p align="center">A progressive <a href="http://nodejs.org" target="_blank">Node.js</a> framework for building efficient and scalable server-side applications.</p>
-    <p align="center">
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/v/@nestjs/core.svg" alt="NPM Version" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/l/@nestjs/core.svg" alt="Package License" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/dm/@nestjs/common.svg" alt="NPM Downloads" /></a>
-<a href="https://circleci.com/gh/nestjs/nest" target="_blank"><img src="https://img.shields.io/circleci/build/github/nestjs/nest/master" alt="CircleCI" /></a>
-<a href="https://discord.gg/G7Qnnhy" target="_blank"><img src="https://img.shields.io/badge/discord-online-brightgreen.svg" alt="Discord"/></a>
-<a href="https://opencollective.com/nest#backer" target="_blank"><img src="https://opencollective.com/nest/backers/badge.svg" alt="Backers on Open Collective" /></a>
-<a href="https://opencollective.com/nest#sponsor" target="_blank"><img src="https://opencollective.com/nest/sponsors/badge.svg" alt="Sponsors on Open Collective" /></a>
-  <a href="https://paypal.me/kamilmysliwiec" target="_blank"><img src="https://img.shields.io/badge/Donate-PayPal-ff3f59.svg" alt="Donate us"/></a>
-    <a href="https://opencollective.com/nest#sponsor"  target="_blank"><img src="https://img.shields.io/badge/Support%20us-Open%20Collective-41B883.svg" alt="Support us"></a>
-  <a href="https://twitter.com/nestframework" target="_blank"><img src="https://img.shields.io/twitter/follow/nestframework.svg?style=social&label=Follow" alt="Follow us on Twitter"></a>
-</p>
-  <!--[![Backers on Open Collective](https://opencollective.com/nest/backers/badge.svg)](https://opencollective.com/nest#backer)
-  [![Sponsors on Open Collective](https://opencollective.com/nest/sponsors/badge.svg)](https://opencollective.com/nest#sponsor)-->
+## Overview
 
-## Description
+A NestJS-based backend service for building a Retrieval-Augmented Generation (RAG) system. This application enables users to upload PDF documents, process them into vector embeddings, store them in a vector database, and query the documents using natural language with AI-powered responses.
 
-[Nest](https://github.com/nestjs/nest) framework TypeScript starter repository.
+## Architecture
 
-## Project setup
+This project implements a RAG pipeline with the following components:
+
+- **Document Processing**: PDF upload, chunking, and embedding generation
+- **Vector Storage**: Pinecone integration for similarity search
+- **AI Integration**: Groq API for generating contextual responses
+- **Database**: PostgreSQL for metadata and application data
+- **API**: RESTful endpoints built with NestJS
+
+## Tech Stack
+
+- **Framework**: NestJS 11.x
+- **Language**: TypeScript 5.x
+- **Database**: PostgreSQL (via TypeORM)
+- **Vector DB**: Pinecone (via @langchain/pinecone)
+- **AI/ML**:
+  - LangChain for document processing and embeddings
+  - Ollama for local LLM support
+  - Groq API for response generation
+- **Document Processing**: pdf-parse for PDF extraction
+- **Infrastructure**: Docker & Docker Compose
+
+## Current Status
+
+### ✅ Completed
+
+- [x] NestJS project initialization
+- [x] PostgreSQL database setup with Docker
+- [x] TypeORM configuration and migrations
+- [x] API versioning (v1)
+- [x] Swagger documentation setup
+- [x] Security middleware (Helmet, CORS, Throttling)
+- [x] Global exception handling
+- [x] Environment configuration
+- [x] Basic module structure
+
+### 🚧 In Progress / Planned
+
+#### File Upload & Processing
+
+- [ ] `POST /api/v1/file/upload` - Upload PDF files
+- [ ] Multer integration for file handling
+- [ ] PDF text extraction and chunking
+- [ ] Embedding generation from document chunks
+- [ ] Vector storage in Pinecone
+
+#### Collection Management
+
+- [ ] `GET /api/v1/collections` - List all document collections/indexes
+- [ ] `GET /api/v1/collections/:id` - Get collection details
+- [ ] Collection metadata storage
+
+#### Chat/Query Interface
+
+- [ ] `POST /api/v1/chat/completions` - Query documents with natural language
+  - Accept prompt and collection/index ID
+  - Generate query embeddings
+  - Perform similarity search in vector DB
+  - Send context to Groq API with system prompt
+  - Return AI-generated response
+
+#### Frontend (Separate Repository)
+
+- [ ] Next.js application for user interface
+- [ ] PDF upload interface
+- [ ] Collection/index selection
+- [ ] Chat interface for querying documents
+- [ ] Response display
+
+## Prerequisites
+
+- Node.js 18+ and npm
+- Docker and Docker Compose
+- Pinecone account and API key
+- Groq API key
+
+## Installation
+
+1. Clone the repository:
 
 ```bash
-$ npm install
+git clone <repository-url>
+cd simple-RAG
 ```
 
-## Compile and run the project
+2. Install dependencies:
 
 ```bash
-# development
-$ npm run start
-
-# watch mode
-$ npm run start:dev
-
-# production mode
-$ npm run start:prod
+npm install
 ```
 
-## Run tests
+3. Set up environment variables:
 
 ```bash
-# unit tests
-$ npm run test
-
-# e2e tests
-$ npm run test:e2e
-
-# test coverage
-$ npm run test:cov
+cp .env.example .env
 ```
 
-## Deployment
+Edit `.env` with your configuration:
 
-When you're ready to deploy your NestJS application to production, there are some key steps you can take to ensure it runs as efficiently as possible. Check out the [deployment documentation](https://docs.nestjs.com/deployment) for more information.
+```env
+PORT=3030
+NODE_ENV=develop
 
-If you are looking for a cloud-based platform to deploy your NestJS application, check out [Mau](https://mau.nestjs.com), our official platform for deploying NestJS applications on AWS. Mau makes deployment straightforward and fast, requiring just a few simple steps:
+# Database
+POSTGRES_USERNAME=postgres
+POSTGRES_PASSWORD=simplerag
+POSTGRES_HOST=localhost
+POSTGRES_PORT=5435
+POSTGRES_DATABASE=simplerag
+POSTGRES_LOG=true
+
+# JWT
+JWT_SECRET=your-secret-key
+JWT_EXPIRES_IN=365d
+
+# Pinecone
+PINECONE_API_KEY=your-pinecone-key
+PINECONE_ENVIRONMENT=your-environment
+PINECONE_INDEX_NAME=your-default-index
+
+# Groq API
+GROQ_API_KEY=your-groq-key
+```
+
+4. Start the database:
 
 ```bash
-$ npm install -g @nestjs/mau
-$ mau deploy
+docker-compose up -d
 ```
 
-With Mau, you can deploy your application in just a few clicks, allowing you to focus on building features rather than managing infrastructure.
+5. Run database migrations:
 
-## Resources
+```bash
+npm run migration:run
+```
 
-Check out a few resources that may come in handy when working with NestJS:
+## Running the Application
 
-- Visit the [NestJS Documentation](https://docs.nestjs.com) to learn more about the framework.
-- For questions and support, please visit our [Discord channel](https://discord.gg/G7Qnnhy).
-- To dive deeper and get more hands-on experience, check out our official video [courses](https://courses.nestjs.com/).
-- Deploy your application to AWS with the help of [NestJS Mau](https://mau.nestjs.com) in just a few clicks.
-- Visualize your application graph and interact with the NestJS application in real-time using [NestJS Devtools](https://devtools.nestjs.com).
-- Need help with your project (part-time to full-time)? Check out our official [enterprise support](https://enterprise.nestjs.com).
-- To stay in the loop and get updates, follow us on [X](https://x.com/nestframework) and [LinkedIn](https://linkedin.com/company/nestjs).
-- Looking for a job, or have a job to offer? Check out our official [Jobs board](https://jobs.nestjs.com).
+```bash
+# Development mode with hot-reload
+npm run start:dev
 
-## Support
+# Production mode
+npm run build
+npm run start:prod
 
-Nest is an MIT-licensed open source project. It can grow thanks to the sponsors and support by the amazing backers. If you'd like to join them, please [read more here](https://docs.nestjs.com/support).
+# Debug mode
+npm run start:debug
+```
 
-## Stay in touch
+The API will be available at `http://localhost:3030`
 
-- Author - [Kamil Myśliwiec](https://twitter.com/kammysliwiec)
-- Website - [https://nestjs.com](https://nestjs.com/)
-- Twitter - [@nestframework](https://twitter.com/nestframework)
+## API Documentation
+
+Once the server is running, access the Swagger documentation at:
+
+```
+http://localhost:3030/api/docs
+```
+
+## Database Management
+
+### Migrations
+
+```bash
+# Generate a new migration
+npm run migration:generate --name=MigrationName
+
+# Create an empty migration
+npm run migration:create --name=MigrationName
+
+# Run migrations
+npm run migration:run
+
+# Revert last migration
+npm run migration:revert
+```
+
+### PgAdmin
+
+Access PgAdmin at `http://localhost:8282`
+
+- Email: `admin@simplerag.com`
+- Password: `simplerag`
+
+## Project Structure
+
+```
+src/
+├── common/              # Shared utilities, decorators, filters
+│   ├── decorators/      # Custom decorators
+│   ├── enums/          # Enums and constants
+│   ├── filters/        # Exception filters
+│   └── helpers/        # Helper functions
+├── config/             # Configuration files
+│   ├── db-config.ts    # Database configuration
+│   ├── envs.ts         # Environment variables
+│   ├── swagger.ts      # Swagger setup
+│   └── typeorm.ts      # TypeORM configuration
+├── helloworld/         # Example module (to be replaced)
+├── migrations/         # Database migrations
+└── main.ts            # Application entry point
+```
+
+## Planned API Endpoints
+
+### File Management
+
+```
+POST   /api/v1/file/upload          Upload and process PDF
+GET    /api/v1/file/:id              Get file metadata
+DELETE /api/v1/file/:id              Delete file and embeddings
+```
+
+### Collections
+
+```
+GET    /api/v1/collections           List all collections
+GET    /api/v1/collections/:id       Get collection details
+DELETE /api/v1/collections/:id       Delete collection
+```
+
+### Chat
+
+```
+POST   /api/v1/chat/completions      Query documents with AI
+```
+
+## Development Workflow
+
+1. **Document Upload Flow**:
+   - User uploads PDF via API
+   - Backend extracts text using pdf-parse
+   - Text is chunked into manageable segments
+   - Embeddings are generated for each chunk
+   - Embeddings stored in Pinecone with metadata
+
+2. **Query Flow**:
+   - User sends query with collection ID
+   - Query is converted to embedding
+   - Similarity search performed in Pinecone
+   - Relevant chunks retrieved
+   - Context sent to Groq API with system prompt
+   - AI-generated response returned to user
+
+## Testing
+
+```bash
+# Unit tests
+npm run test
+
+# E2E tests
+npm run test:e2e
+
+# Test coverage
+npm run test:cov
+
+# Watch mode
+npm run test:watch
+```
+
+## Code Quality
+
+```bash
+# Lint code
+npm run lint
+
+# Format code
+npm run format
+```
+
+## Docker Support
+
+Build and run with Docker:
+
+```bash
+# Build image
+docker build -t simple-rag-backend .
+
+# Run container
+docker run -p 3030:3030 simple-rag-backend
+```
+
+## Contributing
+
+This project is under active development. Contributions are welcome once the core features are implemented.
+
+## Roadmap
+
+1. **Phase 1** (Current): Infrastructure setup ✅
+2. **Phase 2**: File upload and processing module
+3. **Phase 3**: Vector database integration
+4. **Phase 4**: Chat/query endpoint with Groq integration
+5. **Phase 5**: Frontend development (Next.js)
+6. **Phase 6**: Testing and optimization
+7. **Phase 7**: Deployment and documentation
 
 ## License
 
-Nest is [MIT licensed](https://github.com/nestjs/nest/blob/master/LICENSE).
+UNLICENSED - Private project
+
+## Support
+
+For questions or issues, please open an issue in the repository.
+
+---
+
+**Note**: This README will be updated as features are implemented and the project evolves.
