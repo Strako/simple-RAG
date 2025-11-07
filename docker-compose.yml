@@ -1,0 +1,40 @@
+name: simple-rag-db
+services:
+  db:
+    image: postgres
+    container_name: local_postgres_simplerag
+    restart: always
+    ports:
+      - "5435:5432"
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: simplerag
+      POSTGRES_DB: simplerag
+    volumes:
+      - local_pgdata:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+  pgadmin:
+    image: dpage/pgadmin4
+    container_name: pgadmin4_container_simplerag
+    restart: always
+    depends_on:
+      db:
+        condition: service_healthy
+    ports:
+      - "8282:80"
+    environment:
+      PGADMIN_DEFAULT_EMAIL: admin@simplerag.com
+      PGADMIN_DEFAULT_PASSWORD: simplerag
+      PGADMIN_CONFIG_SERVER_MODE: "False" #
+
+    volumes:
+      - pgadmin-data:/var/lib/pgadmin
+      - ./pgadmin-servers.json:/pgadmin4/servers.json
+
+volumes:
+  local_pgdata:
+  pgadmin-data:

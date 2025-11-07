@@ -1,0 +1,23 @@
+# Usando a imagem base do PHP 8.3 do Amazon ECR
+FROM public.ecr.aws/docker/library/node:22.12.0-alpine
+
+#Establece el directorio de trabajo dentro del contenedor
+WORKDIR /app
+
+# Copia el archivo package.json y package-lock.json
+COPY package*.json ./
+
+# Instala las dependencias del proyecto
+RUN npm install
+
+# Copia el resto de la aplicación
+COPY . .
+
+# Compila la aplicación
+RUN npm run build
+
+# Expone el puerto que usa la aplicación (ajusta si usas un puerto diferente)
+EXPOSE 3000
+
+# Define el comando para iniciar la aplicación
+CMD ["npm", "run", "start:prod"]
