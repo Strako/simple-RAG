@@ -12,7 +12,7 @@ export class HelloworldController {
   constructor(private readonly helloworldService: HelloworldService) {}
   @Public()
   @Get('hi')
-  @ApiOperation({ summary: 'Hello world endpoint (example)' })
+  @ApiOperation({ summary: 'Hello world endpoint' })
   @ApiResponse({
     status: HttpStatus.OK,
     type: HelloworldResponseDto,
