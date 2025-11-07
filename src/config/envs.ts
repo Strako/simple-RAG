@@ -1,4 +1,5 @@
-import dotenv from 'dotenv';
+/* eslint-disable @typescript-eslint/no-unsafe-assignment */
+import * as dotenv from 'dotenv';
 
 import * as joi from 'joi';
 import { NODE_ENV } from '../common/enums';
@@ -22,18 +23,13 @@ interface EnvVars {
 const envsSchema = joi
   .object({
     PORT: joi.number().required(),
-    NODE_ENV: joi
-      .string()
-      .valid(NODE_ENV.DEVELOP, NODE_ENV.QA, NODE_ENV.PROD, NODE_ENV.TEST)
-      .required(),
+    NODE_ENV: joi.string().valid(NODE_ENV.DEVELOP, NODE_ENV.QA, NODE_ENV.PROD, NODE_ENV.TEST).required(),
     POSTGRES_HOST: joi.string().required(),
     POSTGRES_PORT: joi.number().required(),
     POSTGRES_USERNAME: joi.string().required(),
     POSTGRES_PASSWORD: joi.string().required(),
     POSTGRES_DATABASE: joi.string().required(),
     POSTGRES_LOG: joi.string().required(),
-    RUN_MIGRATIONS: joi.boolean().optional(),
-    FRONTEND_URL: joi.string().required(),
     JWT_SECRET: joi.string().required(),
     JWT_EXPIRES_IN: joi.string().required(),
   })

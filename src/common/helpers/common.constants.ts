@@ -1,5 +1,5 @@
 export const ZERO = 0;
-export const PROJECT_NAME = 'Metroflog Dasoft';
+export const PROJECT_NAME = 'Simple RAG';
 export const SWAGGER_URL = 'api/v1/docs';
 
 export const MAX_REQUEST_BY_MINUTE = 60;
