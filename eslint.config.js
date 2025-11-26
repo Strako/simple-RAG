@@ -10,7 +10,7 @@ export default [
   ...compat.extends('plugin:prettier/recommended'),
 
   {
-    files: ['*.ts', '*.tsx', '*.js', '*.jsx'],
+    files: ['*.ts', '*.tsx'],
 
     languageOptions: {
       parser: tsParser,
@@ -75,6 +75,6 @@ export default [
   // Ignore legacy config file
   {
     files: ['**/*'],
-    ignores: ['.eslintrc.js'],
+    ignores: ['.eslintrc.js', 'dist/**'],
   },
 ];

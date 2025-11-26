@@ -8,7 +8,7 @@ import * as bodyParser from 'body-parser';
 import { MAX_RESUME_SIZE_IN_MB } from './common/helpers';
 
 async function bootstrap() {
-  const logger = new Logger('Main Metroflog');
+  const logger = new Logger('Main Simple-Rag');
   const app = await NestFactory.create(AppModule);
   const configService = app.get(ConfigService);
 
@@ -39,8 +39,6 @@ async function bootstrap() {
 
   await initSwagger(app, configService);
 
-  await app
-    .listen(envs.port)
-    .then(() => logger.log(`Server running on port ${envs.port}`));
+  await app.listen(envs.port).then(() => logger.log(`Server running on port ${envs.port}`));
 }
 bootstrap();

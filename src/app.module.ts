@@ -11,6 +11,8 @@ import { postgresqlConfig } from './config/db-config';
 import { ScheduleModule } from '@nestjs/schedule';
 import { HellowordModule } from './helloworld/helloworld.module';
 import typeorm from './config/typeorm';
+import { HealthModule } from './health/health.module';
+import { FileUploadModule } from './file-upload/file-upload.module';
 
 @Module({
   imports: [
@@ -32,8 +34,10 @@ import typeorm from './config/typeorm';
       },
     ]),
     HellowordModule,
+    HealthModule,
     JwtModule,
     ScheduleModule.forRoot(),
+    FileUploadModule,
   ],
 
   controllers: [],

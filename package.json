@@ -1,5 +1,5 @@
 {
-  "name": "metroflog-backend",
+  "name": "simple-rag",
   "version": "0.1.0",
   "description": "",
   "author": "",
@@ -27,11 +27,11 @@
     "migration:revert": "npm run typeorm -- -d ./src/config/typeorm.ts migration:revert"
   },
   "dependencies": {
-    "@langchain/community": "^1.0.0",
-    "@langchain/core": "^1.0.3",
-    "@langchain/ollama": "^1.0.0",
-    "@langchain/pinecone": "^1.0.0",
-    "@langchain/textsplitters": "^1.0.0",
+    "@langchain/community": "^1.0.5",
+    "@langchain/core": "^1.1.0",
+    "@langchain/ollama": "^1.0.2",
+    "@langchain/pinecone": "^1.0.1",
+    "@langchain/textsplitters": "^1.0.1",
     "@nestjs/axios": "^4.0.0",
     "@nestjs/cache-manager": "^3.0.1",
     "@nestjs/class-validator": "^0.13.4",
@@ -39,7 +39,7 @@
     "@nestjs/config": "^4.0.2",
     "@nestjs/core": "^11.0.1",
     "@nestjs/jwt": "^11.0.0",
-    "@nestjs/platform-express": "^11.0.1",
+    "@nestjs/platform-express": "^11.1.9",
     "@nestjs/schedule": "^6.0.0",
     "@nestjs/swagger": "^11.2.0",
     "@nestjs/throttler": "^6.4.0",
@@ -51,7 +51,8 @@
     "helmet": "^8.1.0",
     "husky": "^9.1.7",
     "joi": "^17.13.3",
-    "pdf-parse": "^1.1.1",
+    "multer": "^2.0.2",
+    "pdf-parse": "^1.1.4",
     "pg": "^8.16.0",
     "reflect-metadata": "^0.2.2",
     "rxjs": "^7.8.1",
@@ -66,8 +67,9 @@
     "@nestjs/testing": "^11.0.1",
     "@swc/cli": "^0.6.0",
     "@swc/core": "^1.10.7",
-    "@types/express": "^5.0.0",
+    "@types/express": "^5.0.5",
     "@types/jest": "^29.5.14",
+    "@types/multer": "^2.0.0",
     "@types/node": "^22.10.7",
     "@types/supertest": "^6.0.2",
     "eslint": "^9.18.0",
@@ -104,6 +106,10 @@
     "testEnvironment": "node"
   },
   "lint-staged": {
+    "src/**/*.{ts,tsx,js,jsx}": [
+      "eslint --fix",
+      "prettier --write"
+    ],
     "*.{ts,tsx,js,jsx}": [
       "eslint --fix",
       "prettier --write"
