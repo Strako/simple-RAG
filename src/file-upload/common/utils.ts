@@ -1,10 +1,20 @@
 import { PineconeStore } from '@langchain/pinecone';
 import { RecursiveCharacterTextSplitter } from '@langchain/textsplitters';
 import { PDFLoader } from '@langchain/community/document_loaders/fs/pdf';
-
 import { IngestResponse } from './types';
 import { Logger } from '@nestjs/common';
-import { EMBEDDINGS, PINECONE_INDEX } from 'src/common/helpers';
+import { EMBEDDINGS, ERROR_DELETING, PINECONE_INDEX, SUCCESS_DELETING } from 'src/common/helpers';
+import * as fs from 'node:fs';
+
+export function deleteFile(filepath: string) {
+  fs.unlink(filepath, (err) => {
+    if (err) {
+      console.error(ERROR_DELETING, err);
+    } else {
+      console.log(SUCCESS_DELETING, filepath);
+    }
+  });
+}
 
 export function getNameSpace(filePath: string) {
   const namespace = filePath.split('/').pop()!.replace('.pdf', '');

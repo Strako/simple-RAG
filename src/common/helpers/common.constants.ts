@@ -1,7 +1,6 @@
 import { Pinecone as PineconeClient } from '@pinecone-database/pinecone';
 import { OllamaEmbeddings } from '@langchain/ollama';
 import { envs } from 'src/config';
-
 export const ZERO = 0;
 export const PROJECT_NAME = 'Simple RAG';
 export const SWAGGER_URL = 'api/v1/docs';
@@ -24,3 +23,10 @@ export const PINECONE = new PineconeClient({
 export const PINECONE_INDEX = PINECONE.Index(envs.pinecone.indexName);
 
 export const SIMILARITY_RESULTS_K = 5;
+
+export const ERROR_DELETING = 'Error deleting file:';
+export const ALLOWED_TYPES = 'application/pdf';
+export const SUCCESS_DELETING = 'File successfully deleted:';
+export const NO_FILE = 'No file uploaded';
+export const INVALID_FILE = 'Invalid file type, upload a .pdf';
+export const FILE_TOO_LARGE = 'File is too large!';
