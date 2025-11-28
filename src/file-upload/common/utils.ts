@@ -1,11 +1,10 @@
-import { OllamaEmbeddings } from '@langchain/ollama';
 import { PineconeStore } from '@langchain/pinecone';
 import { RecursiveCharacterTextSplitter } from '@langchain/textsplitters';
 import { PDFLoader } from '@langchain/community/document_loaders/fs/pdf';
-import { Pinecone as PineconeClient } from '@pinecone-database/pinecone';
-import { envs } from 'src/config';
+
 import { IngestResponse } from './types';
 import { Logger } from '@nestjs/common';
+import { EMBEDDINGS, PINECONE_INDEX } from 'src/common/helpers';
 
 export function getNameSpace(filePath: string) {
   const namespace = filePath.split('/').pop()!.replace('.pdf', '');
@@ -20,26 +19,17 @@ export const ingest = async (filePath: string, namespace: string): Promise<Inges
     splitPages: true,
   });
   const rawDocuments = await loader.load();
-  console.log('Original documents length: ', rawDocuments.length);
+  logger.log('Original documents length: ', rawDocuments.length);
 
   const textSplitter = new RecursiveCharacterTextSplitter({
     chunkSize: 600,
     chunkOverlap: 100,
   });
   const docs = await textSplitter.splitDocuments(rawDocuments);
-  console.log('Splitted documents length: ', docs.length);
+  logger.log('Splitted documents length: ', docs.length);
 
-  const embeddings = new OllamaEmbeddings({
-    model: 'all-minilm',
-  });
-
-  const pinecone = new PineconeClient({
-    apiKey: envs.pinecone.apiKey,
-  });
-
-  const pineconeIndex = pinecone.Index(envs.pinecone.indexName);
-  const vectorStore = new PineconeStore(embeddings, {
-    pineconeIndex,
+  const vectorStore = new PineconeStore(EMBEDDINGS, {
+    pineconeIndex: PINECONE_INDEX,
     maxConcurrency: 5,
     namespace,
   });

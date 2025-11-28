@@ -13,6 +13,7 @@ import { HellowordModule } from './helloworld/helloworld.module';
 import typeorm from './config/typeorm';
 import { HealthModule } from './health/health.module';
 import { FileUploadModule } from './file-upload/file-upload.module';
+import { QueriesModule } from './queries/queries.module';
 
 @Module({
   imports: [
@@ -38,6 +39,7 @@ import { FileUploadModule } from './file-upload/file-upload.module';
     JwtModule,
     ScheduleModule.forRoot(),
     FileUploadModule,
+    QueriesModule,
   ],
 
   controllers: [],

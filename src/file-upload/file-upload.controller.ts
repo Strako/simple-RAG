@@ -2,14 +2,20 @@ import { Controller, Post, UseInterceptors, UploadedFile, HttpStatus } from '@ne
 import { FileUploadService } from './file-upload.service';
 import { FileInterceptor } from '@nestjs/platform-express';
 import { UploadFileResponseData } from './common/types';
-import { ApiResponse } from '@nestjs/swagger';
+import { ApiConsumes, ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger';
 import { UploadFileResponseDto } from './dto/upload-file-response.dto';
 
-@Controller('file-upload')
+@Controller({
+  path: '/files',
+  version: '1',
+})
+@ApiTags('File upload')
 export class FileUploadController {
   constructor(private readonly fileUploadService: FileUploadService) {}
 
   @Post('upload')
+  @ApiOperation({ summary: 'Endpoint to uplopad a new pdf' })
+  @ApiConsumes('multipart/form-data')
   @UseInterceptors(FileInterceptor('file'))
   @ApiResponse({
     status: HttpStatus.CREATED,

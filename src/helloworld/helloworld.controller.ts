@@ -4,7 +4,7 @@ import { ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger';
 import { HelloworldResponseDto } from './dto/helloworld-response.dto';
 import { Public } from 'src/common/decorators';
 @Controller({
-  path: '/',
+  path: '/hello-world',
   version: '1',
 })
 @ApiTags('Helloworld')
