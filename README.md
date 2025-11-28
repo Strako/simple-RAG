@@ -90,7 +90,6 @@ This project implements a RAG pipeline with the following components:
 - [ ] Namespace/collection browser
 - [ ] Chat interface for querying documents
 - [ ] Response display with source citations
-- [ ] File management dashboard
 
 ## Prerequisites
 
