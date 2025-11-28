@@ -83,13 +83,6 @@ This project implements a RAG pipeline with the following components:
 - [ ] `DELETE /api/v1/collections/:namespace` - Delete collection
 - [ ] Collection metadata storage in PostgreSQL
 
-#### Enhanced File Management
-
-- [ ] `GET /api/v1/files` - List uploaded files
-- [ ] `GET /api/v1/files/:id` - Get file metadata
-- [ ] `DELETE /api/v1/files/:id` - Delete file and embeddings
-- [ ] File metadata persistence in database
-
 #### Frontend (Separate Repository)
 
 - [ ] Next.js application for user interface
